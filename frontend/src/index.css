@@ -5,19 +5,27 @@
 @tailwind utilities;
 
 * {
-    font-family: Outfit;
+  font-family: Outfit;
+}
+
+body {
+  @apply bg-slate-50 text-slate-800;
 }
 
 .active hr {
-    @apply block
+  @apply block;
 }
 
 @media (max-width:740px) {
-    .active  p{
-       @apply text-white bg-primary
-    }
+  .active p {
+    @apply text-white bg-sky-600 rounded-lg;
+  }
 }
 
 ::-webkit-scrollbar {
-    @apply hidden
+  width: 8px;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-300 rounded-full;
 }
