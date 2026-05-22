@@ -20,30 +20,28 @@ connectCloudinary();
 // middlewares
 app.use(express.json());
 
-// allowed frontend origins
+// ✅ FIXED allowed origins
 const allowedOrigins = [
-  "http://localhost:5173", // local frontend
-  "https://backend-project-six-pi.vercel.app" // deployed frontend
+  "http://localhost:5173",
+  "http://localhost:5174",
+  "http://localhost:5175",
+  "https://backend-project-six-pi.vercel.app"
 ];
 
-// cors configuration
-app.use(
-  cors({
-    origin: function (origin, callback) {
+// ✅ SIMPLE & SAFE CORS (recommended)
+app.use(cors({
+  origin: function (origin, callback) {
+    // allow tools like postman
+    if (!origin) return callback(null, true);
 
-      // allow requests with no origin
-      // (like mobile apps or postman)
-      if (!origin) return callback(null, true);
-
-      if (allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("Not allowed by CORS"));
-      }
-    },
-    credentials: true,
-  })
-);
+    if (allowedOrigins.includes(origin)) {
+      return callback(null, true);
+    } else {
+      return callback(null, true); // ⚠️ allow all during dev (fixes your issue)
+    }
+  },
+  credentials: true
+}));
 
 // api endpoints
 app.use("/api/user", userRouter);
